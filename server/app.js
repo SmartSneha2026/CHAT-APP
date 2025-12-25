@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import {config} from "dotenv";
 import fileUpload from "express-fileupload";
 import cors from "cors";
+import userRouter from "./routes/user.routes.js";
+import { dbConnection } from "./database/db.js";
 const app = express();
 
 config({path : "./config/config.env"});
@@ -25,5 +27,6 @@ app.use (
         tempFileDir : "./temp/",
     })
 );
-
+app.use("/api/v1/user", userRouter);
+dbConnection();
 export default app;
