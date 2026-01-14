@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 
-const userSocketMap = {};
+const userSocketMap = {}; // maps userId to socketId
 
 let io;
 export function initSocket(server){
@@ -10,6 +10,9 @@ export function initSocket(server){
         },
     });
 
+    //Listens for the "connection" event → fired every time a new client connects.
+
+//The callback gets a socket object that represents that specific user's connection.
     io.on("connection" , (socket) => {
         console.log("A user connected to the server" , socket.id)
 
