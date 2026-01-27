@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-
+import { toast } from "react-toastify";
 import { axiosInstance } from "../../lib/axios";
-import { connectSocket } from "../../lib/socket";
+import { connectSocket, disconnectSocket } from "../../lib/socket";
 
 export const getUser = createAsyncThunk ("user/me", async (_, thunkAPI) => {
     try {
@@ -10,10 +10,23 @@ export const getUser = createAsyncThunk ("user/me", async (_, thunkAPI) => {
         return res.data.user;
     } catch (error) {
          console.log("Error fetching user:", error);
+         // @ts-ignore
          return thunkAPI.rejectWithValue(error.response?.data || "Failed to fetch User");
     }
 });
-
+export const logout = createAsyncThunk("user/sign-out", async(__, thunkAPI) =>{
+    try{
+        await axiosInstance.get("user/sign-out");
+        disconnectSocket();
+        return null; 
+    }
+    catch(error) {
+        // @ts-ignore
+        toast.error(error.response.data.message);
+        // @ts-ignore
+        return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+});       
 const authSlice = createSlice ({
     name :"auth",
     initialState : {
@@ -31,14 +44,20 @@ const authSlice = createSlice ({
     },
     extraReducers : (builder) => {
         // Handle async actions here
-        builder.addCase(getUser.fulfilled, (state, action) => {
+        builder
+        .addCase(getUser.fulfilled, (state, action) => {
             state.authUser = action.payload;
             state.isCheckingAuth = false;
         })
         .addCase(getUser.rejected, (state, action) => {
             state.authUser = null;
             state.isCheckingAuth = false;
-        });
+        }).addCase(logout.fulfilled, (state) =>{
+            state.authUser = null;
+        })
+        .addCase (logout.rejected, (state) => {
+            state.authUser =state.authUser;
+        }); 
     },
 });
 export const {setOnlineUsers} = authSlice.actions;
