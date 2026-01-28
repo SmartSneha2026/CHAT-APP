@@ -10,7 +10,7 @@ export const getUser = createAsyncThunk ("user/me", async (_, thunkAPI) => {
         return res.data.user;
     } catch (error) {
          console.log("Error fetching user:", error);
-         // @ts-ignore
+         
          return thunkAPI.rejectWithValue(error.response?.data || "Failed to fetch User");
     }
 });
@@ -21,12 +21,26 @@ export const logout = createAsyncThunk("user/sign-out", async(__, thunkAPI) =>{
         return null; 
     }
     catch(error) {
-        // @ts-ignore
+       
         toast.error(error.response.data.message);
-        // @ts-ignore
+        
         return thunkAPI.rejectWithValue(error.response.data.message);
     }
-});       
+});      
+
+export const login = createAsyncThunk("user/sign-in" , async (data, thunkAPI) =>{
+    try{
+       const res =  await axiosInstance.post("/user/sign-in", data);
+     
+        connectSocket(res.data.user);
+        toast.success("Logged in successfully");
+        return res.data.user;
+    } catch(error) {
+        
+        toast.error(error.response.data.message);
+        return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+}) 
 const authSlice = createSlice ({
     name :"auth",
     initialState : {
@@ -49,6 +63,7 @@ const authSlice = createSlice ({
             state.authUser = action.payload;
             state.isCheckingAuth = false;
         })
+        
         .addCase(getUser.rejected, (state, action) => {
             state.authUser = null;
             state.isCheckingAuth = false;
@@ -57,7 +72,17 @@ const authSlice = createSlice ({
         })
         .addCase (logout.rejected, (state) => {
             state.authUser =state.authUser;
-        }); 
+        })
+        .addCase(login.pending, (state) => {
+            state.isLoggingIn = true;
+        })
+        .addCase(login.fulfilled, (state, action) =>{
+            state.authUser = action.payload;
+            state.isLoggingIn =false;
+        })
+        .addCase(login.rejected, (state) => {
+            state.isLoggingIn =false;
+        });
     },
 });
 export const {setOnlineUsers} = authSlice.actions;

@@ -17,6 +17,7 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUser());
+    
   }, [getUser]);
 
   useEffect(() => {
@@ -27,7 +28,7 @@ const App = () => {
            dispatch(setOnlineUsers(users));
         });
         return () => disconnectSocket();
-      }
+      } 
       if(ischeckingAuth && !authUser) {
         return (
           <div className = "flex items-center justify-center h-screen">
@@ -42,7 +43,7 @@ const App = () => {
       <Router>
         <Navbar/>
         <Routes>
-            <Route path='/' element={authUser ? <Home/> : <Navigate tp={'/login'}/>}/>
+            <Route path='/' element={authUser ? <Home/> : <Navigate to={'/login'}/>}/>
              <Route 
                path='/register'
                element={!authUser ? <Register/> : <Navigate to={"/"}/>}  

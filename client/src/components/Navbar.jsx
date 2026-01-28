@@ -4,12 +4,12 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import { logout } from "../store/slices/authSlice";
 const Navbar = () => {
-   // @ts-ignore
+ 
    const {authUser} = useSelector((state)=> state.auth );
    const dispatch = useDispatch();
 
    const handleLogOut = () => {
-    // @ts-ignore
+    
     dispatch(logout());
    };
      
@@ -28,7 +28,7 @@ const Navbar = () => {
                         <h1 className="text-lg font-bold text-gray-800">TALKIE</h1>
                     </Link>
                 </div>
-                {/*Right Action */}
+            
 
                 <div className="flex items-center gap-3">
                     {

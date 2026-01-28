@@ -54,7 +54,7 @@ export const signup = catchAsyncError(async (req, res, next) => {
 
 
 export const signin = catchAsyncError(async (req, res, next) => {
-    const {email, password} = req.body;
+    const { email, password } = req.body || {};
     if(!email || !password){
         return res.status(400).json({
             success :false,
