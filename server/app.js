@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 import express from  "express";
 import cookieParser from "cookie-parser";
 import {config} from "dotenv";
