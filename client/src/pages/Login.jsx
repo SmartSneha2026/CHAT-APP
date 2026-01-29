@@ -27,7 +27,8 @@ const Login = () => {
   
   return (
     <>
-    <div className='min-h-screen grid grid-cols-1 lg-grid-cols-2 bg-white'>
+    <div className='min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-white'>
+
         {/*LEFT SIDE - Form */}
         <div className='flex flex-col justify-center  items-center px-6 py-12'>
             <div className='w-full max-w-md'>

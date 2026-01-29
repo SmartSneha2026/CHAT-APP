@@ -32,9 +32,9 @@ export const login = createAsyncThunk("user/sign-in" , async (data, thunkAPI) =>
     try{
        const res =  await axiosInstance.post("/user/sign-in", data);
      
-        connectSocket(res.data.user);
+        connectSocket(res.data);
         toast.success("Logged in successfully");
-        return res.data.user;
+        return res.data;
     } catch(error) {
         
         toast.error(error.response.data.message);
