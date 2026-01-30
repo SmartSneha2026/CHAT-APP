@@ -43,7 +43,7 @@ const Navbar = () => {
                               <button onClick={handleLogOut}  
                               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium text-red-700 hover:bg-red-100 transition">
                                 <LogOut className="w-5 h-6"/>
-                                <span className="hidden sm:inline">Logo</span>
+                                <span className="hidden sm:inline">Logout</span>
                                 
                               </button>
                             </>
