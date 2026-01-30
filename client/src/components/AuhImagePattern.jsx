@@ -1,14 +1,14 @@
 import React from "react";
 
-const AuthImagePattern = ({ title, subtitle }) => {
+const AuhImagePattern = ({ title, subtitle }) => {
   return (
-    <div className="flex lg:flex items-center justify-center p-12 bg-gray-50">
+    <> <div className="hidden lg:flex items-center justify-center p-12">
       <div className="max-w-md text-center">
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-3 gap-3 mb-8">
           {Array.from({ length: 9 }).map((_, i) => (
             <div
               key={i}
-              className={`w-20 h-20 rounded-2xl bg-blue-500/40 
+              className={`aspect-square rounded-2xl bg-gray-700/30
                 ${i % 2 === 0 ? "animate-pulse" : ""}`}
             />
           ))}
@@ -17,8 +17,8 @@ const AuthImagePattern = ({ title, subtitle }) => {
         <h2 className="text-2xl font-bold text-black mb-4">{title}</h2>
         <p className="text-gray-700">{subtitle}</p>
       </div>
-    </div>
+    </div></>
   );
 };
 
-export default AuthImagePattern;
+export default AuhImagePattern;
